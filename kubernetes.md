@@ -39,6 +39,7 @@ vagrant ssh
 - Set the `NS` records for the domain name `kubernetes.<your_domain_name>` (e.g. `kubernetes.example.com`) with values from Route53
 
 # Installing kops
+Get the stable release number https://api.github.com/repos/kubernetes/kops/releases/latest
 ```
 wget https://github.com/kubernetes/kops/releases/download/1.8.1/kops-linux-amd64
 chmod +x kops-linux-amd64
@@ -54,7 +55,7 @@ aws configure
 ```
 
 # Install kubectl
-- Get the stable release number https://storage.googleapis.com/kubernetes-release/release/stable.txt
+Get the stable release number https://storage.googleapis.com/kubernetes-release/release/stable.txt
 ```
 wget https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl
 sudo mv kubectl /usr/local/bin/
