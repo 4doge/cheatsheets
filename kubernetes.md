@@ -43,9 +43,21 @@ vagrant ssh
 wget https://github.com/kubernetes/kops/releases/download/1.8.1/kops-linux-amd64
 chmod +x kops-linux-amd64
 sudo mv kops-linux-amd64 /usr/local/bin/
+```
+
+# Configure awscli
+```
 sudo apt-get update
 sudo apt-get install python-pip
 sudo pip install awscli
 aws configure
 ```
+
+# Install kubectl
+```
+wget https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl
+sudo mv kubectl /usr/local/bin/
+sudo chmod +x /usr/local/bin/kubectl
+```
+
 
