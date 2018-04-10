@@ -58,8 +58,8 @@ aws configure
 Get the stable release number https://storage.googleapis.com/kubernetes-release/release/stable.txt
 ```
 wget https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl
+chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
-sudo chmod +x /usr/local/bin/kubectl
 ```
 
 
