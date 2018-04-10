@@ -44,6 +44,7 @@ Get the stable release number https://api.github.com/repos/kubernetes/kops/relea
 wget https://github.com/kubernetes/kops/releases/download/1.8.1/kops-linux-amd64
 chmod +x kops-linux-amd64
 sudo mv kops-linux-amd64 /usr/local/bin/
+sudo mv /usr/local/bin/kops-linux-amd64 /usr/local/bin/kops
 ```
 
 # Configure awscli
@@ -62,4 +63,10 @@ chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 ```
 
+# Generate ssh keys
+```
+ssh-keygen -f .ssh/id_rsa
+```
+Private key `.ssh/id_rsa`
+Public key `.ssh/id_rsa.pub`
 
