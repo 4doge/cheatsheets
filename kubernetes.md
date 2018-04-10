@@ -78,3 +78,9 @@ kops update cluster kubernetes.<your_domain_name> --yes --state=s3://kops-state-
 ```
 
 Wait until all nodes will be ready - `kubectl get nodes`
+
+# Deploy the dashboard
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+kubectl config view
+```
