@@ -85,7 +85,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/s
 ```
 - Run `kubectl get nodes` and copy the `Name` of node, where `Roles=master` (e.g. `ip-xx-xx-xx-xxx.eu-central-1.compute.internal`)
 - Run `kubectl describe nodes ip-xx-xx-xx-xxx.eu-central-1.compute.internal` and search for an `ExternalIP` value (e.g. `xx.xx.xxx.xx`)
-- Access the `ExternalIP` via `https` protocol. (e.g. https://xx.xx.xxx.xx/
+- Access the `ExternalIP` via `https` protocol. (e.g. `https://xx.xx.xxx.xx/ui`)
 - Run `kubectl config view` to get the basic auth credentials
 - Run `kubectl get secret` to view list of secrets
 - Run `kubectl describe secret default-token-<some_random_id>` to get the Token for Sign in to the Dashboard UI
