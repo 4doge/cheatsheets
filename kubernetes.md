@@ -67,6 +67,12 @@ sudo mv kubectl /usr/local/bin/
 ```
 ssh-keygen -f .ssh/id_rsa
 ```
-Private key `.ssh/id_rsa`
-Public key `.ssh/id_rsa.pub`
+- Private key `.ssh/id_rsa`
+- Public key `.ssh/id_rsa.pub`
 
+# Creating cluster
+Zones reference - https://gist.github.com/neilstuartcraig/0ccefcf0887f29b7f240
+```
+kops create cluster --name=kubernetes.<your_domain_name> --state=s3://kops-state-<project_name_or_whatever_unique> --zones=eu-central-1a --node-count=2 --node-size=t2.micro --master-size=t2.micro --dns-zone=kubernetes.<your_domain_name>
+kops update cluster kubernetes.<your_domain_name> --yes --state=s3://kops-state-<project_name_or_whatever_unique>
+```
