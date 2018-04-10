@@ -82,5 +82,9 @@ Wait until all nodes will be ready - `kubectl get nodes`
 # Deploy the dashboard
 ```
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
-kubectl config view
 ```
+- Run `kubectl get nodes` and copy the `Name` of node, where `Roles=master` (e.g. `ip-xx-xx-xx-xxx.eu-central-1.compute.internal`)
+- Run `kubectl describe nodes ip-xx-xx-xx-xxx.eu-central-1.compute.internal` and search for an `ExternalIP` value (e.g. `xx.xx.xxx.xx`)
+- Access the `ExternalIP` via `https` protocol. (e.g. https://xx.xx.xxx.xx/
+- Run `kubectl config view` to get the basic auth credentials
+
