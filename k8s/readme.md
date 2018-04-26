@@ -152,10 +152,17 @@ kubectl rollout undo deployment/helloworld-deployment
 - label any object (pod/svc/rc/deployment)
 - key/value
 - multiple
+- tag node (run only on specific node)
 - nodeSelector
+```
+kubectl label node <node_name> key=value
+kubectl get pods -l environment=production,tier=frontend
+```
 
 ###### healthchecks
 - types: periodical commands, periodical check over http
+- livenessProbe and readinessProbe
+- /healthz
 
 ###### secrets
 - "secret" data
