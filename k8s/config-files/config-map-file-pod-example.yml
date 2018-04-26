@@ -16,5 +16,5 @@ spec:
       mounthPath: /etc/config
   volumes:
     - name: config-volume
-    configMap:
-      name: app-config
+      configMap:
+        name: app-config
