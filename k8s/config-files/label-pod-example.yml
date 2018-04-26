@@ -11,10 +11,5 @@ spec:
     ports:
     - name: helloworld-port
       containerPort: 3000
-    volumeMounts:
-      - name: config-volume
-      mounthPath: /etc/config
-  volumes:
-    - name: config-volume
-      configMap:
-        name: app-config
+  nodeSelector:
+    hardware: high-spec

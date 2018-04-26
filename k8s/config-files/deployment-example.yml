@@ -12,6 +12,6 @@ spec:
       containers:
       - name: k8s-helloworld
         image: wardviaene/k8s-demo
-      ports:
-      - name: helloworld-port
-        containerPort: 3000
+        ports:
+        - name: helloworld-port
+          containerPort: 3000
