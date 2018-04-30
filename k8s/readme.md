@@ -54,7 +54,7 @@ Kubernetes or k8s - 2014
 [Minikube](https://github.com/kubernetes/minikube)
 
 # Init Kubernetes cluster
-[readme.md](https://github.com/4doge/cheatsheets/blob/master/kubernetes.md)
+[kubernetes.md](https://github.com/4doge/cheatsheets/blob/master/k8s/kubernetes.md)
 
 # Kubernetes components
 #### Master components
