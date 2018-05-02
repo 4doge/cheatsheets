@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ssl-test
+spec:
+  tls:
+    - hosts:
+      - test3.db2dev.com
+      secretName: wild.db2dev.com
+  rules:
+    - host: test3.db2dev.com
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: helloworld-service
+            servicePort: 80
