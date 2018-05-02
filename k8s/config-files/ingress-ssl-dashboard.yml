@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dashboard-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/secure-backends: "true"
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-secret: basic-auth-dashboard
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
+spec:
+  tls:
+    - hosts:
+      - k8s.db2dev.com
+      secretName: wild.db2dev.com
+  rules:
+    - host: k8s.db2dev.com
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: kubernetes-dashboard
+            servicePort: 443
