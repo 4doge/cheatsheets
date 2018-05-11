@@ -1,5 +1,18 @@
 # Continuous integration
 
+::: warning
+Before setup continuous integration workflow you need to verify:
+- that you already have deployment in Kubernetes cluster
+- you have versioning in your CI configuration for docker images
+```bash
+docker login -u $DOCKER_CLOUD_USERNAME -p $DOCKER_CLOUD_PASSWORD
+
+docker build -t $DOCKER_CLOUD_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM .
+
+docker push $DOCKER_CLOUD_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM
+```
+:::
+
 To deliver your project to Kubernetes you need to have the next steps in your CI configuration:
 
 - Setup environment variables:
@@ -11,17 +24,17 @@ To deliver your project to Kubernetes you need to have the next steps in your CI
 - [Install Kubectl](/kubernetes/setup-machine-for-cluster-management.html#kubectl)
 - Run next commands:
 ```bash
-sudo kubectl config set-cluster $KUBERNETES_CLUSTER --insecure-skip-tls-verify=true --server=$KUBERNETES_API_SERVER
+kubectl config set-cluster $KUBERNETES_CLUSTER --insecure-skip-tls-verify=true --server=$KUBERNETES_API_SERVER
 
-sudo kubectl config set-credentials admin --token=$KUBERNETES_TOKEN
+kubectl config set-credentials admin --token=$KUBERNETES_TOKEN
 
-sudo kubectl config set-context $KUBERNETES_CLUSTER --cluster=$KUBERNETES_CLUSTER --user=admin
+kubectl config set-context $KUBERNETES_CLUSTER --cluster=$KUBERNETES_CLUSTER --user=admin
 
-sudo kubectl config use-context $KUBERNETES_CLUSTER
+kubectl config use-context $KUBERNETES_CLUSTER
 
-sudo kubectl cluster-info
+kubectl cluster-info
 
-sudo kubectl get pods
+kubectl get pods
 
-sudo kubectl set image deployment/<deployment_name> $CIRCLE_PROJECT_REPONAME=$DOCKER_CLOUD_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM
+kubectl set image deployment/<deployment_name> $CIRCLE_PROJECT_REPONAME=$DOCKER_CLOUD_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_BRANCH-$CIRCLE_BUILD_NUM
 ```
