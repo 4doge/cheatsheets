@@ -1,0 +1,25 @@
+{
+  "name": "cheatsheets",
+  "version": "1.0.0",
+  "description": "Vuepress based cheatsheets",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev",
+    "build": "vuepress build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4doge/cheatsheets.git"
+  },
+  "author": "Anton Boksha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/4doge/cheatsheets/issues"
+  },
+  "homepage": "https://github.com/4doge/cheatsheets#readme",
+  "dependencies": {
+    "gh-pages": "^1.1.0",
+    "vuepress": "^0.8.4"
+  }
+}
