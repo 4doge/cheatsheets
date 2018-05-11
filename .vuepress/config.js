@@ -3,7 +3,6 @@ module.exports = {
     description: 'How to ...',
     base: '/cheatsheets/',
     themeConfig: {
-        lastUpdated: true,
         sidebar: [
             '/',
             {
