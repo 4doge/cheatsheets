@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Cheatsheets | Serve dashboard through Ingress</title>
+    <meta name="description" content="How to ...">
+    
+    
+    <link rel="preload" href="/assets/css/16.styles.3a529fc4.css" as="style"><link rel="preload" href="/assets/js/app.13052ceb.js" as="script"><link rel="preload" href="/assets/js/11.1bd7fae6.js" as="script"><link rel="prefetch" href="/assets/js/9.faab97d4.js"><link rel="prefetch" href="/assets/js/1.f762f5d0.js"><link rel="prefetch" href="/assets/js/2.20a21022.js"><link rel="prefetch" href="/assets/js/3.2d533ba2.js"><link rel="prefetch" href="/assets/js/4.be7c8ea1.js"><link rel="prefetch" href="/assets/js/5.8ed6b605.js"><link rel="prefetch" href="/assets/js/6.a3a68cbe.js"><link rel="prefetch" href="/assets/js/7.ee45a024.js"><link rel="prefetch" href="/assets/js/8.999defee.js"><link rel="prefetch" href="/assets/js/0.6337abd9.js"><link rel="prefetch" href="/assets/js/10.b4f86ccc.js"><link rel="prefetch" href="/assets/js/12.8cd4c7d4.js"><link rel="prefetch" href="/assets/js/13.cff22ed4.js"><link rel="prefetch" href="/assets/js/14.7b06669e.js"><link rel="prefetch" href="/assets/js/15.ebe8e3a6.js">
+    <link rel="stylesheet" href="/assets/css/16.styles.3a529fc4.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      Cheatsheets
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><a href="/" class="sidebar-link">Homepage</a></li><li><div class="sidebar-group"><p class="sidebar-heading open"><span>Kubernetes</span><!----></p><ul class="sidebar-group-items"><li><a href="/kubernetes/introduction.html" class="sidebar-link">Introduction</a></li><li><a href="/kubernetes/setup-aws.html" class="sidebar-link">Setup AWS</a></li><li><a href="/kubernetes/setup-domain-provider-ns.html" class="sidebar-link">Setup domain provider</a></li><li><a href="/kubernetes/setup-machine-for-cluster-management.html" class="sidebar-link">Setup machine for cluster management</a></li><li><a href="/kubernetes/init-cluster.html" class="sidebar-link">Init cluster</a></li><li><a href="/kubernetes/dashboard-deploy.html" class="sidebar-link">Deploy dashboard</a></li><li><a href="/kubernetes/install-ingress.html" class="sidebar-link">Install Ingress</a></li><li><a href="/kubernetes/ingress-dashboard.html" class="active sidebar-link">Serve dashboard through Ingress</a></li><li><a href="/kubernetes/continuous-integration.html" class="sidebar-link">Continuous integration</a></li><li><a href="/kubernetes/upgrade-cluster.html" class="sidebar-link">Upgrade &amp; downgrade cluster</a></li></ul></div></li></ul></div><div class="page"><div class="content"><h1 id="serve-dashboard-through-ingress"><a href="#serve-dashboard-through-ingress" aria-hidden="true" class="header-anchor">#</a> Serve dashboard through Ingress</h1><p>If you want to server HTTPS version of Dashboard, which is recommended, you need to create secret with <code>tls.crt</code> and <code>tls.key</code> data.</p><pre class="language-yaml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Secret
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> certs<span class="token punctuation">-</span>dashboard
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token key atrule">type</span><span class="token punctuation">:</span> Opaque
+<span class="token key atrule">data</span><span class="token punctuation">:</span>
+  <span class="token key atrule">tls.crt</span><span class="token punctuation">:</span> &lt;base64_cert_here<span class="token punctuation">&gt;</span>
+  <span class="token key atrule">tls.key</span><span class="token punctuation">:</span> &lt;base64_private_key_here<span class="token punctuation">&gt;</span>
+</code></pre><p>If you want to secure your dashboard with Nginx basic auth you need to create secret:</p><pre class="language-bash"><code>sh -c <span class="token string">&quot;echo -n '&lt;username&gt;:' &gt;&gt; basic_auth&quot;</span>
+sh -c <span class="token string">&quot;openssl passwd -apr1 &gt;&gt; basic_auth&quot;</span>
+kubectl create secret generic basic-auth --from-file<span class="token operator">=</span>auth --namespace<span class="token operator">=</span>kube-system
+</code></pre><p>After that you could create an <code>Ingress</code> object:</p><pre class="language-yaml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> extensions/v1beta1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Ingress
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> dashboard<span class="token punctuation">-</span>ingress
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">nginx.ingress.kubernetes.io/secure-backends</span><span class="token punctuation">:</span> <span class="token string">&quot;true&quot;</span>
+    <span class="token key atrule">nginx.ingress.kubernetes.io/auth-type</span><span class="token punctuation">:</span> basic
+    <span class="token key atrule">nginx.ingress.kubernetes.io/auth-secret</span><span class="token punctuation">:</span> basic<span class="token punctuation">-</span>auth<span class="token punctuation">-</span>dashboard
+    <span class="token key atrule">nginx.ingress.kubernetes.io/auth-realm</span><span class="token punctuation">:</span> <span class="token string">&quot;Authentication Required&quot;</span>
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">tls</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">hosts</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> &lt;subdomain_for_dashboard<span class="token punctuation">&gt;</span>
+      <span class="token key atrule">secretName</span><span class="token punctuation">:</span> certs<span class="token punctuation">-</span>dashboard
+  <span class="token key atrule">rules</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">host</span><span class="token punctuation">:</span> &lt;subdomain_for_dashboard<span class="token punctuation">&gt;</span>
+      <span class="token key atrule">http</span><span class="token punctuation">:</span>
+        <span class="token key atrule">paths</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">path</span><span class="token punctuation">:</span> /
+          <span class="token key atrule">backend</span><span class="token punctuation">:</span>
+            <span class="token key atrule">serviceName</span><span class="token punctuation">:</span> kubernetes<span class="token punctuation">-</span>dashboard
+            <span class="token key atrule">servicePort</span><span class="token punctuation">:</span> <span class="token number">443</span>
+</code></pre></div><!----><div class="content page-nav"><p class="inner"><span class="prev">
+        ← <a href="/kubernetes/install-ingress.html" class="prev">
+          Install Ingress
+        </a></span><span class="next"><a href="/kubernetes/continuous-integration.html">
+          Continuous integration
+        </a> →
+      </span></p></div></div></div></div>
+    <script src="/assets/js/11.1bd7fae6.js" defer></script><script src="/assets/js/app.13052ceb.js" defer></script>
+  </body>
+</html>
