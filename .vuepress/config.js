@@ -1,6 +1,7 @@
 module.exports = {
     title: 'Cheatsheets',
     description: 'How to ...',
+    base: '/cheatsheets/',
     themeConfig: {
         sidebar: [
             '/',
